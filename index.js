@@ -1,11 +1,28 @@
-// créer un form pour taper les todos
+const input = document.querySelector("input");
+const todoList = document.querySelector(".todo-list");
 
-// ajouter sur le dom ce qui est tapé dans l'input à la validation du form
-// monInput.value
-
-// supprimer un todo lorsque l'on clique dessus(.remove())
-
-
-// stocker dans le local storage la liste
-
-// consulter le local storage au lancement de l'application pour rajouter les todos
+let save = () => { localStorage.setItem("todo", todoList.innerHTML) }
+let reload = () => {
+  if (localStorage.length > 0)
+    todoList.innerHTML = localStorage.getItem("todo")
+}
+input.addEventListener("keypress", (e) => {
+  if (e.key === "Enter" && input.value.length > 0) {
+    todoList.innerHTML += `<li id="list">${input.value}</li>`;
+    save()
+    input.value = "";
+  } else if (e.key === "Enter" && input.value.length === 0) {
+    alert("Aucun caractères saisis")
+  }
+});
+todoList.addEventListener("click", (e) => {
+  if (e.target.style.color === "") {
+    e.target.innerHTML += ` <span class="finish">(terminé)</span>`;
+    e.target.style.color = "grey";
+    save()
+  } else {
+    e.target.remove()
+    save()
+  }
+})
+reload()
