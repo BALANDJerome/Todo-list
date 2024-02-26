@@ -12,16 +12,15 @@ let reload = () => {
 };
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  list.innerHTML += `<li id="list">${input.value}</li>`;
+  list.innerHTML += `<li>${input.value}</li>`;
   save();
   input.value = "";
 });
 list.addEventListener("click", (e) => {
-  if (e.target.style.color === "") {
-    e.target.innerHTML += ` <span class="finish">(terminé)</span>`;
-    e.target.style.color = "grey";
-  } else {
+  if (e.target.classList.contains("checked")) {
     e.target.remove();
+  } else {
+    e.target.classList.add("checked");
   }
   save();
 });
